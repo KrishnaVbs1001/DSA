@@ -1,0 +1,51 @@
+class Solution {
+    public String minRemoveToMakeValid(String s) {
+        ArrayList<Integer> rp = new ArrayList<>();
+        ArrayList<Integer> lp = new ArrayList<>();
+        int cnt=0;
+        ArrayList<Integer> sure = new ArrayList<>();
+
+        for(int i=0;i<s.length();i++)
+        {
+            char c = s.charAt(i);
+            if(c==')' && cnt==0)
+            {
+                sure.add(i);
+            }
+            else if(c=='(')
+            {
+                rp.add(i);
+                cnt++;
+            }
+            else if(c==')')
+            {
+                lp.add(i);
+                cnt--;
+            }
+        }
+        String res="";
+        int si=0;
+        while(cnt>0)
+        {
+            sure.add(rp.get(rp.size()-1));
+            rp.remove(rp.size()-1);
+            cnt--;
+        }
+        Collections.sort(sure);
+        System.out.println(sure);
+        for(int i=0;i<s.length();i++)
+        {
+            if(si<sure.size() && i==sure.get(si))
+            {
+                si++;
+                //System.out.println(res);
+            }
+            else
+            {
+                res+=s.charAt(i);
+                //System.out.println();
+            }
+        }
+        return res;
+    }
+}
